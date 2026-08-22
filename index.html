@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تأشيرة تركيا 🇹🇷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: #0d0f17;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* خلفية ضوئية متحركة ناعمة */
+    .glow-bg {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.25) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(50px);
+      z-index: 1;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.9; }
+    }
+
+    /* كارت زجاجي فاخر */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(22, 27, 38, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      padding: 40px 24px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .icon-box {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 20px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1.5px solid rgba(239, 68, 68, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    }
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* زر مودرن ناعم */
+    .btn-main {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #e30a17 0%, #b80712 100%);
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(227, 10, 23, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-main:active {
+      transform: scale(0.97);
+    }
+
+    /* صندوق المقلب الشفاف والمضيء */
+    .prank-box {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 20px;
+      padding: 24px 18px;
+      margin-top: 10px;
+    }
+
+    .prank-text {
+      color: #f1f5f9;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    .highlight {
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 107, 107, 0.2);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-bg"></div>
+
+  <!-- ملف الصوت -->
+  <audio id="bg-music" src="music.mp3" loop></audio>
+
+  <div class="card">
+    
+    <!-- الصفحة الأولى -->
+    <div id="page-1">
+      <div class="icon-box" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); box-shadow: none;">
+        <span>🇹🇷</span>
+      </div>
+      <h1 class="title">جاهز لترى تأشيرة سفرك لتركيا؟</h1>
+      <p class="subtitle">تمت معالجة وثيقة السفر بنجاح وهي جاهزة للعرض الآن.</p>
+      <button class="btn-main" onclick="nextPage()">استعراض التأشيرة 📜</button>
+    </div>
+
+    <!-- الصفحة الثانية (المقلب) -->
+    <div id="page-2" class="hidden">
+      <div class="icon-box">
+        <span>🛑</span>
+      </div>
+      <h1 class="title" style="color: #ff6b6b;">ليس بهذه السهولة!</h1>
+      
+      <div class="prank-box">
+        <p class="prank-text">
+          أرسل فيديو جديد للواتساب ترقص فيه مع أصدقائك لمدة <span class="highlight">دقيقتين</span> مع أغنية <span class="highlight">"قسمة ونصيب"</span> لكي ترى تأشيرة تركيا! 💃🕺
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function nextPage() {
+      const music = document.getElementById('bg-music');
+      if (music) { music.play(); }
+
+      document.getElementById('page-1').classList.add('hidden');
+      document.getElementById('page-2').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
