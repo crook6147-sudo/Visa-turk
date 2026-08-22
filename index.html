@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>تأشيرة تركيا 🇹🇷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card {
+      background: rgba(22, 27, 34, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 35px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 10;
+    }
+
+    .icon-box {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-quiz {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f8fafc;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-quiz:active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* الزر الذهبي المتحرك السريع */
+    #gold-runaway-btn {
+      position: fixed;
+      z-index: 99999;
+      padding: 16px 30px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: 2px solid #fbbf24;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: top 0.12s ease, left 0.12s ease;
+      touch-action: manipulation;
+    }
+
+    /* منطقة الخدش مع الصورة */
+    .scratch-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      margin-top: 15px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+    }
+
+    .scratch-bg-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    canvas#scratch-canvas {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 2;
+    }
+
+    /* النافذة المنبثقة للتكبير والتحميل */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-img {
+      max-width: 95%;
+      max-height: 75vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      object-fit: contain;
+    }
+
+    .modal-btns {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-download {
+      padding: 12px 24px;
+      background: #10b981;
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-close {
+      padding: 12px 20px;
+      background: #475569;
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" src="music.mp3" loop></audio>
+
+  <!-- الصفحة الأولى -->
+  <div class="card" id="page-1">
+    <div class="icon-box">🇹🇷</div>
+    <h1 class="title">جاهز لترى تأشيرة سفرك لتركيا؟</h1>
+    <p class="subtitle">تمت معالجة وثيقة السفر بنجاح وهي جاهزة للعرض الآن.</p>
+    <button class="btn-main" onclick="startQuestions()">بدء الاستعراض 📜</button>
+  </div>
+
+  <!-- السؤال الأول والوحيد -->
+  <div class="card hidden" id="q-1">
+    <div class="icon-box">🏠</div>
+    <h1 class="title">سؤال مهم</h1>
+    <p class="subtitle">هل تشتاق لأهلك ووطنك أثناء السفر؟</p>
+    <button class="btn-quiz" onclick="showGoldBtnPage()">نعم ❤️</button>
+    <button class="btn-quiz" onclick="showGoldBtnPage()">لا أهتم لهم ✈️</button>
+  </div>
+
+  <!-- الصفحة الأخيرة (الخدش والاحتفال) -->
+  <div class="card hidden" id="page-scratch">
+    <div class="icon-box">🎉</div>
+    <h1 class="title" style="color: #10b981;">تم الكشف بنجاح!</h1>
+    <p class="subtitle">اخدش الطبقة الرمادية بالإصبع، ثم اضغط على الصورة لتكبيرها وحفظها:</p>
+
+    <div class="scratch-container" onclick="openModal()">
+      <img src="123visa.jpg" alt="Visa Image" class="scratch-bg-img">
+      <canvas id="scratch-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- نافذة تكبير الصورة وتحميلها -->
+  <div id="image-modal" class="modal hidden">
+    <img src="123visa.jpg" class="modal-img" alt="Enlarged Visa">
+    <div class="modal-btns">
+      <a href="123visa.jpg" download="Turkey_Visa.jpg" class="btn-download">تنزيل التأشيرة 📥</a>
+      <button class="btn-close" onclick="closeModal()">إغلاق ✖</button>
+    </div>
+  </div>
+
+  <!-- الزر الذهبي المتحرك السريع -->
+  <button id="gold-runaway-btn" class="hidden">الكشف عن التأشيرة 🔑</button>
+
+  <script>
+    let clickCount = 0;
+    let isScratchedEnough = false;
+
+    function startQuestions() {
+      const music = document.getElementById('bg-music');
+      if (music) { music.play(); }
+      document.getElementById('page-1').classList.add('hidden');
+      document.getElementById('q-1').classList.remove('hidden');
+    }
+
+    function showGoldBtnPage() {
+      document.getElementById('q-1').classList.add('hidden');
+
+      const goldBtn = document.getElementById('gold-runaway-btn');
+      goldBtn.classList.remove('hidden');
+      
+      goldBtn.style.left = `${(window.innerWidth - goldBtn.offsetWidth) / 2}px`;
+      goldBtn.style.top = `${(window.innerHeight - goldBtn.offsetHeight) / 2}px`;
+
+      goldBtn.addEventListener('click', handleGoldBtnClick);
+      goldBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        handleGoldBtnClick();
+      });
+    }
+
+    function handleGoldBtnClick() {
+      clickCount++;
+
+      if (clickCount >= 11) {
+        const goldBtn = document.getElementById('gold-runaway-btn');
+        goldBtn.classList.add('hidden');
+        
+        document.getElementById('page-scratch').classList.remove('hidden');
+        triggerConfetti();
+        initScratchCard();
+      } else {
+        moveGoldButton();
+      }
+    }
+
+    function moveGoldButton() {
+      const btn = document.getElementById('gold-runaway-btn');
+      const padding = 20;
+      const x = Math.floor(Math.random() * (window.innerWidth - btn.offsetWidth - padding * 2)) + padding;
+      const y = Math.floor(Math.random() * (window.innerHeight - btn.offsetHeight - padding * 2)) + padding;
+      
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    function triggerConfetti() {
+      var duration = 3 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
+
+      var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) { return clearInterval(interval); }
+        var particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+
+    function initScratchCard() {
+      const canvas = document.getElementById('scratch-canvas');
+      const ctx = canvas.getContext('2d');
+      const container = canvas.parentElement;
+
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px Cairo';
+      ctx.textAlign = 'center';
+      ctx.fillText('اخدش هنا لكشف التأشيرة 🪙', canvas.width / 2, canvas.height / 2 + 5);
+
+      let isDrawing = false;
+
+      function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, Math.PI * 2);
+        ctx.fill();
+        isScratchedEnough = true;
+      }
+
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+
+      canvas.addEventListener('touchstart', () => isDrawing = true);
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
+    }
+
+    function openModal() {
+      // فتح التكبير فقط عند البدء بالخدش
+      if (isScratchedEnough) {
+        document.getElementById('image-modal').classList.remove('hidden');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
