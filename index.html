@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تأشيرة سفر تركيا 🇹🇷</title>
+  <style>
+    :root {
+      --primary: #e30a17;
+      --secondary: #d4af37;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 25px;
+      text-align: center;
+      border: 2px solid var(--primary);
+    }
+
+    h1, h2 { color: var(--primary); margin-bottom: 10px; }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .btn:hover { background-color: #b80712; }
+
+    .option-btn {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+      padding: 12px;
+      margin: 8px 0;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: right;
+      font-size: 1rem;
+    }
+
+    .option-btn:hover { background: #e5e7eb; }
+
+    .prank-box {
+      background: #fff0f0;
+      border: 2px dashed var(--primary);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ملف الصوت -->
+<audio id="bg-music" src="music.mp3" loop></audio>
+
+<div class="container">
+  
+  <!-- Step 1: Start Screen -->
+  <div id="step-1">
+    <span>✈️🇹🇷</span>
+    <h1>جاهز لترى تأشيرة سفرك لتركيا؟</h1>
+    <p>اضغط على الزر بالأسفل لاستعراض التأشيرة الخاصة بك</p>
+    <button class="btn" onclick="goToStep2()">نعم 📜</button>
+  </div>
+
+  <!-- Step 2: Prank Screen -->
+  <div id="step-2" class="hidden">
+    <h2>🛑 ليس بهذه السهولة!</h2>
+    <div class="prank-box">
+      <p style="font-size: 1.1rem; line-height: 1.6; font-weight: bold;">
+        أرسل فيديو جديد للواتساب ترقص فيه مع أصدقائك لمدة دقيقتين مع أغنية "قسمة ونصيب" لكي ترى تأشيرة تركيا! 💃🕺
+      </p>
+    </div>
+    <button class="btn" onclick="startQuiz()">تم الإرسال / الانتقال للتحدي 🔥</button>
+  </div>
+
+  <!-- Step 3: Quiz Screen -->
+  <div id="quiz-screen" class="hidden">
+    <h3 id="question-text">عنوان السؤال</h3>
+    <div id="options-container"></div>
+  </div>
+
+  <!-- Step 4: Result Screen -->
+  <div id="result-screen" class="hidden">
+    <h2>قسمتك ونصيبك في تركيا! 🎉</h2>
+    <div class="prank-box">
+      <h3 id="result-title" style="color: var(--primary);"></h3>
+      <p id="result-desc"></p>
+    </div>
+    <button class="btn" onclick="location.reload()">إعادة التحدي 🔄</button>
+  </div>
+
+</div>
+
+<script>
+  function playMusic() {
+    const music = document.getElementById('bg-music');
+    music.play().catch(e => console.log("Audio play deferred"));
+  }
+
+  function goToStep2() {
+    playMusic(); // تشغيل الموسيقى عند الضغط على "نعم"
+    document.getElementById('step-1').classList.add('hidden');
+    document.getElementById('step-2').classList.remove('hidden');
+  }
+
+  const questions = [
+    {
+      q: "أول شيء راح تسويه لما توصل مطار إسطنبول؟",
+      options: [
+        { text: "أدور على أقرب محل شاورما وجلسة شاي ☕", score: "food" },
+        { text: "أصور سيلفي مع الجواز والتأشيرة 📸", score: "social" },
+        { text: "أدور على نصيبي في البسفور 💔", score: "love" }
+      ]
+    },
+    {
+      q: "كيف راح تقضي سهرتك الأولى هناك؟",
+      options: [
+        { text: "عشاء فاخر في تقسيم ومع موسيقى تركية 🎻", score: "love" },
+        { text: "أجرب كل أنواع الحلويات والبقلاوة 🥐", score: "food" },
+        { text: "بث مباشر وأنا في القارب 🚢", score: "social" }
+      ]
+    },
+    {
+      q: "شنو الحلم الأكبر من هذه السفرة؟",
+      options: [
+        { text: "أرجع بوزن زائد 5 كيلو من الأكل الطيب 😋", score: "food" },
+        { text: "أتعرف على شريك العمر في شوارع أورتاكوي 💍", score: "love" },
+        { text: "أصير مشهور وأجمع آلاف المتابعين 🌟", score: "social" }
+      ]
+    }
+  ];
+
+  let currentQ = 0;
+  let scores = { food: 0, love: 0, social: 0 };
+
+  function startQuiz() {
+    playMusic();
+    document.getElementById('step-2').classList.add('hidden');
+    document.getElementById('quiz-screen').classList.remove('hidden');
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const q = questions[currentQ];
+    document.getElementById('question-text').innerText = q.q;
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = opt.text;
+      btn.onclick = () => selectOption(opt.score);
+      container.appendChild(btn);
+    });
+  }
+
+  function selectOption(scoreType) {
+    scores[scoreType]++;
+    currentQ++;
+    if (currentQ < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    document.getElementById('quiz-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+
+    const title = document.getElementById('result-title');
+    const desc = document.getElementById('result-desc');
+
+    if (scores.love >= scores.food && scores.love >= scores.social) {
+      title.innerText = "قسمتك: بطل/بطلة مسلسل تركي! 🌹";
+      desc.innerText = "نصيبك تلاقي الحب الحقيقي على جسر البسفور في غروب الشمس!";
+    } else if (scores.food >= scores.social) {
+      title.innerText = "قسمتك: عاشق البقلاوة والشاورما! 🥙";
+      desc.innerText = "نصيبك في تركيا هو الأكل! راح تستمتع بألذ المأكولات وتنسى الرجيم تماماً.";
+    } else {
+      title.innerText = "قسمتك: نجم السوشيال ميديا! 📸";
+      desc.innerText = "نصيبك هو الشهرة! ألبوم صورك راح ينفجر مقاطع ستوري ومناظر خلابة.";
+    }
+  }
+</script>
+
+</body>
+</html>
