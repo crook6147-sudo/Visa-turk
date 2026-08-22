@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استمارة تقديم</title>
+<style>
+body{font-family:Arial;max-width:700px;margin:auto;padding:20px}
+input,button{width:100%;padding:10px;margin:8px 0}
+button{cursor:pointer}
+</style>
+</head>
+<body>
+<h2>استمارة تقديم</h2>
+
+<form>
+<label>الاسم الثلاثي</label>
+<input type="text" required>
+
+<label>الطول (سم)</label>
+<input type="number" required>
+
+<label>رقم جواز السفر</label>
+<input type="text" required>
+
+<label>رقم الهوية</label>
+<input type="text" required>
+
+<label>صورة الجواز</label>
+<input type="file" accept="image/*" required>
+
+<label>صورة الهوية (الأمام)</label>
+<input type="file" accept="image/*" required>
+
+<label>صورة الهوية (الخلف)</label>
+<input type="file" accept="image/*" required>
+
+<button type="submit">إرسال</button>
+</form>
+
+<p>ملاحظة: هذا نموذج واجهة فقط. يحتاج ربط بقاعدة بيانات أو خدمة رفع ملفات ليخزن البيانات فعلياً.</p>
+</body>
+</html>
