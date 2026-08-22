@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>تأشيرة تركيا 🇹🇷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card {
+      background: rgba(22, 27, 34, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 35px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 10;
+    }
+
+    .icon-box {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .stop-sign {
+      width: 65px;
+      height: 65px;
+      background: #dc2626;
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1.1rem;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+      margin: 0 auto 15px;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    /* أزرار الأسئلة الأنيقة */
+    .btn-main {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-quiz {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f8fafc;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-quiz:active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .prank-text {
+      color: #f87171;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.8;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .waiting-text {
+      color: #f3e5ab;
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.6;
+      animation: pulseFade 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseFade {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* الزر المتحرك الذكي لللمس */
+    #runaway-btn {
+      position: fixed;
+      z-index: 99999;
+      padding: 14px 24px;
+      background: #10b981;
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      border: 2px solid #ffffff;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: top 0.15s ease, left 0.15s ease;
+      touch-action: none;
+    }
+
+    /* منطقة الخدش */
+    .scratch-container {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      margin-top: 15px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .scratch-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #1e293b;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    canvas#scratch-canvas {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 2;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" src="music.mp3" loop></audio>
+
+  <div class="card">
+    
+    <!-- الصفحة الأولى -->
+    <div id="page-1">
+      <div class="icon-box">🇹🇷</div>
+      <h1 class="title">جاهز لترى تأشيرة سفرك لتركيا؟</h1>
+      <p class="subtitle">تمت معالجة وثيقة السفر بنجاح وهي جاهزة للعرض الآن.</p>
+      <button class="btn-main" onclick="startQuestions()">بدء الاستعراض 📜</button>
+    </div>
+
+    <!-- السؤال الأول -->
+    <div id="q-1" class="hidden">
+      <div class="icon-box">🏠</div>
+      <h1 class="title">السؤال الأول</h1>
+      <p class="subtitle">هل تشتاق لأهلك ووطنك أثناء السفر؟</p>
+      <button class="btn-quiz" onclick="nextQ(2)">نعم، جداً ❤️</button>
+      <button class="btn-quiz" onclick="nextQ(2)">أحياناً ✈️</button>
+    </div>
+
+    <!-- السؤال الثاني -->
+    <div id="q-2" class="hidden">
+      <div class="icon-box">🧳</div>
+      <h1 class="title">السؤال الثاني</h1>
+      <p class="subtitle">هل حقيبتك جاهزة للانطلاق إلى اسطنبول الآن؟</p>
+      <button class="btn-quiz" onclick="nextQ(3)">جاهزة تماماً 🎒</button>
+      <button class="btn-quiz" onclick="nextQ(3)">أحتاج بعض الوقت ⏳</button>
+    </div>
+
+    <!-- السؤال الثالث -->
+    <div id="q-3" class="hidden">
+      <div class="icon-box">⭐</div>
+      <h1 class="title">السؤال الثالث</h1>
+      <p class="subtitle">هل تعتقد أنك تستحق هذه التأشيرة مجاناً؟</p>
+      <button class="btn-quiz" style="border-color: #10b981; color: #34d399;" onclick="showPrankPage()">بالتأكيد أستحقها! 🌟</button>
+    </div>
+
+    <!-- الصفحة الثانية (المقلب والزر السريع) -->
+    <div id="page-2" class="hidden">
+      <div class="stop-sign">STOP</div>
+      <h1 class="title" style="color: #ef4444;">ليس بهذه السهولة!</h1>
+      <p class="prank-text">
+        أرسل فيديو جديد للواتساب ترقص فيه مع أصدقائك لمدة دقيقتين مع أغنية "قسمة ونصيب" لكي ترى تأشيرة تركيا! 💃🕺
+      </p>
+      <p class="waiting-text">
+        * جاري انتظار استلام الفيديو لتأكيد فتح التأشيرة تلقائياً...
+      </p>
+    </div>
+
+    <!-- الصفحة الأخيرة (الخدش والاحتفال) -->
+    <div id="page-3" class="hidden">
+      <div class="icon-box">🎉</div>
+      <h1 class="title" style="color: #10b981;">تم الكشف بنجاح!</h1>
+      <p class="subtitle">اخدش الطبقة الرمادية بالإصبع لمشاهدة التأشيرة:</p>
+
+      <div class="scratch-container">
+        <div class="scratch-bg">
+          <h2 style="color:#f59e0b; font-size:1.3rem;">VISA APPROVED 🇹🇷</h2>
+          <p style="color:#e2e8f0; font-size:0.9rem; margin-top:5px;">تأشيرة دخول متعدد - تركيا</p>
+          <span style="font-size:2rem; margin-top:10px;">✈️ VIP</span>
+        </div>
+        <canvas id="scratch-canvas"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الزر المتحرك الهارب -->
+  <button id="runaway-btn" class="hidden">كشف التأشيرة الآن 🔑</button>
+
+  <script>
+    function startQuestions() {
+      const music = document.getElementById('bg-music');
+      if (music) { music.play(); }
+      document.getElementById('page-1').classList.add('hidden');
+      document.getElementById('q-1').classList.remove('hidden');
+    }
+
+    function nextQ(num) {
+      document.getElementById(`q-${num-1}`).classList.add('hidden');
+      document.getElementById(`q-${num}`).classList.remove('hidden');
+    }
+
+    function showPrankPage() {
+      document.getElementById('q-3').classList.add('hidden');
+      document.getElementById('page-2').classList.remove('hidden');
+
+      const btn = document.getElementById('runaway-btn');
+      btn.classList.remove('hidden');
+      moveButton();
+
+      // أحداث الهرب عند الاقتراب أو اللمس
+      btn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        moveButton();
+      });
+      btn.addEventListener('mouseover', moveButton);
+
+      // زر المافيا عند الضغط الفعلي المتكرر أو السريع
+      let touchCount = 0;
+      btn.addEventListener('click', function() {
+        touchCount++;
+        if (touchCount >= 2) { // يتيح الفتح بعد محاولتين إمساك
+          btn.classList.add('hidden');
+          document.getElementById('page-2').classList.add('hidden');
+          document.getElementById('page-3').classList.remove('hidden');
+          triggerConfetti();
+          initScratchCard();
+        } else {
+          moveButton();
+        }
+      });
+    }
+
+    function moveButton() {
+      const btn = document.getElementById('runaway-btn');
+      const padding = 30;
+      const x = Math.floor(Math.random() * (window.innerWidth - btn.offsetWidth - padding * 2)) + padding;
+      const y = Math.floor(Math.random() * (window.innerHeight - btn.offsetHeight - padding * 2)) + padding;
+      
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    function triggerConfetti() {
+      var duration = 3 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
+
+      var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) { return clearInterval(interval); }
+        var particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+
+    function initScratchCard() {
+      const canvas = document.getElementById('scratch-canvas');
+      const ctx = canvas.getContext('2d');
+      const container = canvas.parentElement;
+
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px Cairo';
+      ctx.textAlign = 'center';
+      ctx.fillText('اخدش هنا لكشف التأشيرة 🪙', canvas.width / 2, canvas.height / 2 + 5);
+
+      let isDrawing = false;
+
+      function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+
+      canvas.addEventListener('touchstart', () => isDrawing = true);
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
+    }
+  </script>
+
+</body>
+</html>
